@@ -1,0 +1,42 @@
+# Configuracao do uso do Lise (NHR@ZIB) pelos scripts de bin/lise/.
+#
+# E o unico lugar com dados pessoais (usuario, e-mails, conta): nenhum script tem esses
+# valores escritos dentro. Quando surgir um projeto de calculo, basta preencher
+# LISE_CONTA. Formato KEY=valor, lido tanto pelo bash (source) quanto pelo criar-job.py.
+#
+# Guia: docs/lise.md
+
+# Atalho do ~/.ssh/config usado para enviar, submeter e trazer. O blogin e o login da
+# CLX: o software (modulos) de la e o que os jobs na cpu-clx enxergam.
+LISE_HOST=blogin
+
+# Espelho de runs/ no Lise: runs/<pasta> local <-> $LISE_RUNS/<pasta> remoto.
+# Caminho por extenso porque o rsync nao expande $WORK do lado de la.
+LISE_RUNS=/scratch/usr/<usuario>/runs
+
+# Conta a debitar (-A). Vazio = a conta padrao, que e a pessoal (75 mil core-h/trimestre).
+# <projeto> = conta do projeto do grupo (peca ao orientador).
+LISE_CONTA=<projeto>
+# Conta pessoal (o "test project" do manual: tem o mesmo nome do usuario). Usada com
+# criar-job.py --conta pessoal; vai explicita no -A, porque o padrao pode ser mudado no Portal.
+LISE_CONTA_PESSOAL=<usuario>
+
+# Padroes do job.slurm gerado pelo criar-job.py (cada um pode ser trocado na task).
+LISE_PARTICAO=cpu-clx
+LISE_TEMPO=04:00:00
+
+# Aviso por e-mail ao fim do job. Use UM endereco so: uma lista separada por virgulas nao
+# entrega nada. Sem endereco, o aviso vai para o usuario do Lise e pode nao chegar.
+LISE_EMAIL=<seu-email>
+LISE_EMAIL_TIPO=END,FAIL
+
+# Exciting validado contra a build local em 01/10/2026 (registros/semana-05, secao 5.2).
+# O modulo exige o impi/2021.15 carregado antes.
+LISE_MODULOS="impi/2021.15 exciting/011-sodium-alpha"
+LISE_BINARIO=exciting_mpismp
+
+# exciting do grupo (build "dft05", Genoa, com ELPA): aceita DFT-1/2 + SOC + svlo juntos.
+# Usado com criar-job.py --exciting grupo (particao padrao: cpu-genoa). Testado em 24/10/2026:
+# modulos carregam no genoa-login e o ldd nao acusa biblioteca faltando.
+LISE_EXCITING_GRUPO=/home/projects/<projeto>/bin/exciting/dft05/8a1b06684e/mpismp_cpu-genoa-elpa/exciting_mpismp
+LISE_MODULOS_GRUPO="openmpi/gcc/5.0.3 aocl/gcc/5.0.0"

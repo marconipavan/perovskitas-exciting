@@ -1,0 +1,26 @@
+Bootstrap: docker
+From: xinzhewu/hpc-gcc12-openmpi5-openblas-scalapack:latest
+
+# Container apenas com a TOOLCHAIN (GCC 12, OpenMPI, OpenBLAS, ScaLAPACK)
+# usada para compilar o exciting sodium. O exciting NAO fica dentro da imagem;
+# ele e compilado no host atraves deste container (ver build-exciting.sh).
+# Receita baseada no INSTALL.md oficial do exciting sodium.
+
+%labels
+    Purpose  Toolchain para compilar exciting sodium (gfortran/OpenMPI/OpenBLAS)
+
+%post
+    set -e
+    # xsltproc (obrigatorio) + dependencias de Python do test suite
+    apt-get update && apt-get install -y xsltproc python3-dev python3-pytest python3-numpy
+
+    # --- FFTW3: precisa de dupla E simples precisao, com OpenMP/threads ---
+    # OBS: -DENABLE_AVX2=ON assume CPU com AVX2 (qualquer CPU recente tem).
+    #      Se o build/execucao der "Illegal instruction", remova os 2 -DENABLE_AVX2=ON.
+    wget http://www.fftw.org/fftw-3.3.10.tar.gz
+    tar -xzf fftw-3.3.10.tar.gz
+    cd fftw-3.3.10 && mkdir build && cd build
+    cmake .. -DENABLE_THREADS=ON -DENABLE_OPENMP=ON -DENABLE_AVX2=ON && make && make install
+    cd ../ && mkdir build_float && cd build_float
+    cmake .. -DENABLE_THREADS=ON -DENABLE_OPENMP=ON -DENABLE_AVX2=ON -DENABLE_FLOAT=ON && make && make install
+    cd ../.. && rm -rf fftw-3.3.10 fftw-3.3.10.tar.gz

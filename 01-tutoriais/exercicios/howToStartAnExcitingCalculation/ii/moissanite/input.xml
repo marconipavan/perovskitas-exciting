@@ -1,0 +1,36 @@
+<input>
+
+   <title>6H-SiC (moissanite, COD 1011053)</title>
+
+   <structure speciespath="CAMINHO/DO/exciting/species/">
+      <crystal scale="5.8487">
+         <basevect> 1.0   0.0        0.0    </basevect>
+         <basevect>-0.5   0.8660254  0.0    </basevect>
+         <basevect> 0.0   0.0        4.9015 </basevect>
+      </crystal>
+
+      <species speciesfile="Si.xml">
+         <atom coord="0.0000000 0.0000000 0.1250000"/>
+         <atom coord="0.0000000 0.0000000 0.6250000"/>
+         <atom coord="0.3333333 0.6666667 0.2917000"/>
+         <atom coord="0.6666667 0.3333333 0.7917000"/>
+         <atom coord="0.3333333 0.6666667 0.9583000"/>
+         <atom coord="0.6666667 0.3333333 0.4583000"/>
+      </species>
+
+      <species speciesfile="C.xml">
+         <atom coord="0.0000000 0.0000000 0.0000000"/>
+         <atom coord="0.0000000 0.0000000 0.5000000"/>
+         <atom coord="0.3333333 0.6666667 0.1667000"/>
+         <atom coord="0.6666667 0.3333333 0.6667000"/>
+         <atom coord="0.3333333 0.6666667 0.8333000"/>
+         <atom coord="0.6666667 0.3333333 0.3333000"/>
+      </species>
+   </structure>
+
+   <groundstate
+      ngridk="6 6 2"
+      xctype="GGA_PBE_SOL">
+   </groundstate>
+
+</input>

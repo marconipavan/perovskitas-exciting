@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="http://xml.exciting-code.org/info.xsl" type="text/xsl"?>
+<info date="2026-08-11" time="11:45:58" versionhash="sodium-230" title="LiF-BSE">
+  <groundstate status="finished">
+    <scl>
+      <iter iteration="1" rms="5.1962780514337302E-004" rmslog10="-3.28430761800" deltae="107.19346628024432" deltaelog10="2.03016831479" chgdst="7.9300804437000455E-005" chgdstlog10="-4.10072240712" fermidos="0.00000000000">
+        <energies totalEnergy="-107.193466280" fermiEnergy="0.135030776357" sum-of-eigenvalues="-52.8102642063" electronic-kinetic="106.937563081" core-electron-kinetic="0.00000000000" Coulomb="-202.155307639" Coulomb-potential="-144.169960574" nuclear-nuclear="-27.4257002331" electron-nuclear="-205.289254237" Hartree="30.5596468316" Madelung="-130.070327352" xc-potential="-15.5778667134" exchange="-11.5128020213" correlation="-0.462919701385"/>
+        <charges totalcharge="12.00000000" core="2.000000000" core_leakage="0.6572972300E-07" valence="10.00000000" interstitial="2.030761219" muffin-tin-total="9.969238781">
+          <atom species="Li" muffin-tin="2.133924589"/>
+          <atom species="F" muffin-tin="7.835314192"/>
+        </charges>
+        <timing timetot="8.39643131200" timeinit="0.215605449000" timemat="0.687889712000" timefv="1.32951928700" timesv="0.00000000000" timerho="5.41945818400" timepot="0.743958680000" timefor="0.00000000000"/>
+      </iter>
+      <structure>
+        <crystal unitCellVolume="110.0909249" BrillouinZoneVolume="2.253139517" nktot="0" ngridk="3    3    3">
+          <basevect>3.804000000       3.804000000       0.000000000</basevect>
+          <basevect>3.804000000       0.000000000       3.804000000</basevect>
+          <basevect>0.000000000       3.804000000       3.804000000</basevect>
+          <reciprvect>0.8258655767      0.8258655767     -0.8258655767</reciprvect>
+          <reciprvect>0.8258655767     -0.8258655767      0.8258655767</reciprvect>
+          <reciprvect>-0.8258655767      0.8258655767      0.8258655767</reciprvect>
+        </crystal>
+        <species chemicalSymbol="Li">
+          <atom x="0.00000000000" y="0.00000000000" z="0.00000000000"/>
+        </species>
+        <species chemicalSymbol="F">
+          <atom x="0.500000000000" y="0.500000000000" z="0.500000000000"/>
+        </species>
+      </structure>
+    </scl>
+  </groundstate>
+</info>

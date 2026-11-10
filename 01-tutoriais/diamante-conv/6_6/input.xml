@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<input>
+	<title>Diamond: Convergence test</title>
+	<structure speciespath="CAMINHO/DO/exciting/species">
+		<crystal scale="6.719">
+			<basevect>0.5 0.5 0.0</basevect>
+			<basevect>0.5 0.0 0.5</basevect>
+			<basevect>0.0 0.5 0.5</basevect>
+		</crystal>
+		<species speciesfile="C.xml">
+			<atom coord="0.0 0.0 0.0"> </atom>
+			<atom coord="0.25 0.25 0.25"> </atom>
+		</species>
+	</structure>
+	<groundstate
+	   xctype="GGA_PBE_SOL"
+	   ngridk="6 6 6"
+	   rgkmax="6"
+	   gmaxvr="14">
+	</groundstate>
+</input>

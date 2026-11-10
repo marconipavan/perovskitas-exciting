@@ -1,0 +1,714 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "exciting: resultado do calculo (pasta do input.xml aberto)",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/resultado.py --src '${fileDirname}' --linha",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "Le o INFO.OUT da pasta do arquivo aberto: gap em eV, direto ou indireto, energia, tempo e avisos"
+        },
+        {
+            "label": "exciting: plot de convergencia",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/plot-convergencia.py -d '${fileDirname}' '${input:prefixoVarredura}' ${input:painelDiff} ${input:copiarFigura}",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            },
+            "detail": "Compara as subpastas PREFIXO_* da pasta do arquivo aberto e imprime a tabela"
+        },
+        {
+            "label": "exciting: plot de pesos excitonicos",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/plot-exciton-weights.py -d '${fileDirname}' -l ${input:lambdaExciton} -y ${input:janelaEnergia} -s ${input:escalaPesos} ${input:copiarFigura}",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            },
+            "detail": "Bandas + pesos excitonicos (KPATHEXC) da pasta do arquivo aberto"
+        },
+        {
+            "label": "estrutura: POSCAR -> geometry.xml (arquivo aberto)",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/poscar2xml.py '${file}' -o '${fileDirname}/geometry.xml' && cat '${fileDirname}/geometry.xml'",
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "Converte o POSCAR aberto no editor e grava geometry.xml ao lado dele"
+        },
+        {
+            "label": "estrutura: POSCAR -> geometry.xml (com rmt)",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/poscar2xml.py '${file}' -o '${fileDirname}/geometry.xml' --rmt '${input:raiosMT}' && cat '${fileDirname}/geometry.xml'",
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "Idem, ja preenchendo os raios de muffin-tin em vez do marcador defineHere"
+        },
+        {
+            "label": "Registro: nova semana",
+            "type": "shell",
+            "command": "${workspaceFolder}/registros/_scripts/nova-semana.sh",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "Cria registros/semana-NN a partir do template e atualiza o indice"
+        },
+        {
+            "label": "Registro: ficha da simulacao",
+            "type": "shell",
+            "command": "${workspaceFolder}/registros/_scripts/ficha.py --src '${fileDirname}' --varia '${input:varredura}'",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "Tabela de parametros a partir do input.xml da pasta do arquivo aberto"
+        },
+        {
+            "label": "Registro: adicionar figura",
+            "type": "shell",
+            "command": "${workspaceFolder}/registros/_scripts/add-figura.sh -f '${input:figura}' -l '${input:legenda}'",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "Copia a figura para figuras/ da semana e devolve o Markdown pronto"
+        },
+        {
+            "label": "Registro: indice de runs",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/indice-runs.py ${input:incluiTutoriais}",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "Varre runs/ e regenera runs/INDICE.md (material, calculo, parametros, gap, tempo)"
+        },
+        {
+            "label": "Registro: parametros convergidos",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/parametros.py ${input:sistemaParametros}",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "Mostra os parametros ja convergidos de um sistema ('-' = panorama de todos)"
+        },
+        {
+            "label": "Registro: importar convergencia",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/parametros.py --importar --src '${fileDirname}' --secao '${input:sistemaParametros}' --semana '${input:numeroSemana}'",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "Le o convergencia.md da pasta do arquivo aberto e registra os valores convergidos"
+        },
+        {
+            "label": "Registro: abrir semana atual",
+            "type": "shell",
+            "command": "code \"$(ls -d ${workspaceFolder}/registros/semana-* | sort | tail -1)/REGISTRO.md\"",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "silent",
+                "panel": "shared",
+                "close": true
+            },
+            "detail": "Abre o REGISTRO.md da semana de maior numero"
+        },
+        {
+            "label": "exciting: otica do BSE (alpha, tau, eps_inf)",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/otica.py --src '${fileDirname}' -n ${input:quantosExcitons} --conferir ${input:figuraOtica} ${input:copiarFigura}",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "Grandezas opticas derivadas do BSE da pasta aberta: eps_inf, coeficiente de absorcao, energia de ligacao e tempo de vida de cada exciton brilhante. Confere o EXCITON contra o EPSILON."
+        },
+        {
+            "label": "exciting: raio do exciton (do .cube)",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/exciton-raio.py --src '${fileDirname}'",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "Extensao espacial do exciton: <r>, sqrt(<r2>) e o peso dentro de 1/2/3/4 A, lidos do excitonWavefunction-*.cube. Avisa se a supercelula for pequena demais."
+        },
+        {
+            "label": "Registro: tabela de BSE",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/tabela-bse.py",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "Regera registros/TABELA-BSE.md a partir de todos os BSE terminados em runs/. So o trecho entre os marcadores e reescrito."
+        },
+        {
+            "label": "Registro: estado da matriz (fase x nivel)",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/indice-runs.py --matriz",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "Quantas das 28 celulas (7 fases x 4 niveis de teoria) ja tem gap calculado."
+        },
+        {
+            "label": "exciting: limpar intermediarios da pasta",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/limpar-runs.sh '${fileDirname}' ${input:apagarMesmo}",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "Apaga os arquivos pesados recalculaveis (EVEC*, SCCLI, EXCLI, SCREEN...). Por padrao so mostra o que apagaria."
+        },
+        {
+            "label": "estrutura: montar fase (PBE ou DFT-1/2)",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/montar-fase.py ${input:faseMontar} -m ${input:materialMontar} ${input:nivelMontar} ${input:varrerMontar}",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "Monta runs/<material>-<fase>-<nivel>/ a partir do POSCAR e do groundstate padrao. A malha sai por densidade e a ionizacao do DFT-1/2 e calculada da formula unitaria."
+        },
+        {
+            "label": "exciting: isovalores para o VESTA",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/exciton-raio.py --src '${fileDirname}' --isovalores",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "shared",
+                "clear": true
+            },
+            "detail": "Tabela de isovalores do excitonWavefunction-*.cube: fracao do maximo, valor absoluto a digitar no VESTA, densidade contida e numero de pontos de grade."
+        },
+        {
+            "label": "Lise: abrir terminal (blogin)",
+            "type": "shell",
+            "command": "ssh blogin",
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true,
+                "focus": true
+            },
+            "detail": "Sessao interativa no login da CLX. Com o ControlMaster do ~/.ssh/config, esta conexao e reaproveitada pelas outras tasks do Lise."
+        },
+        {
+            "label": "Lise: criar job.slurm (pasta do input.xml aberto)",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/lise/criar-job.py --src '${fileDirname}' --ranks '${input:liseRanks}' --threads ${input:liseThreads} --tempo '${input:liseTempo}' --particao '${input:liseParticao}' --conta '${input:liseConta}' ${input:liseForcar}",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            },
+            "detail": "Escreve o job.slurm na pasta (versionado). Nao fala com o Lise. Ranks 'auto' = pontos k do KPOINTS.OUT, ou o no inteiro."
+        },
+        {
+            "label": "Lise: enviar e submeter (pasta do input.xml aberto)",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/lise/enviar.sh '${fileDirname}' && ${workspaceFolder}/bin/lise/submeter.sh '${fileDirname}'",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true,
+                "focus": true
+            },
+            "detail": "Envia input, especies e job.slurm para o WORK, mostra particao, ranks e custo maximo, e so submete com confirmacao."
+        },
+        {
+            "label": "Lise: estado dos jobs",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/lise/estado.sh",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true
+            },
+            "detail": "A fila (squeue) e, para cada job registrado ainda nao trazido, situacao, tempo gasto e iteracao do SCF."
+        },
+        {
+            "label": "Lise: trazer todos os terminados (em paralelo)",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/lise/trazer-terminados.sh ${input:liseParalelo} ${input:liseState}",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true,
+                "focus": true
+            },
+            "detail": "Pergunta ao Slurm quais jobs registrados ja terminaram e traz todos, varios ao mesmo tempo. Logs em .lise/trazer/<job>.log; resumo no fim."
+        },
+        {
+            "label": "Lise: limpar SCCLI e EXCLI de um BSE terminado (pasta do input.xml aberto)",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/lise/limpar.sh '${fileDirname}'",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "dedicated",
+                "clear": true,
+                "focus": true
+            },
+            "detail": "Apaga no Lise so os intermediarios gigantes, depois de conferir os resultados locais e a fila, e pede confirmacao."
+        },
+        {
+            "label": "Lise: trazer resultado (pasta do input.xml aberto)",
+            "type": "shell",
+            "command": "${workspaceFolder}/bin/lise/trazer.sh '${fileDirname}' ${input:liseState}",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [],
+            "presentation": {
+                "reveal": "always",
+                "panel": "new",
+                "clear": true,
+                "focus": true
+            },
+            "runOptions": {
+                "instanceLimit": 10
+            },
+            "detail": "Traz os resultados (sem EVEC*; o STATE.OUT so se pedido), mostra o custo real e gera figuras, indice e resultado."
+        }
+    ],
+    "inputs": [
+        {
+            "id": "prefixoVarredura",
+            "type": "promptString",
+            "description": "Prefixo (nempty), padrao (nstlbse_*514) ou varias pastas separadas por espaco (bsetype_singlet beyond_TDA). '-' detecta sozinho.",
+            "default": "-"
+        },
+        {
+            "id": "painelDiff",
+            "type": "pickString",
+            "description": "Incluir o painel de diferenca no fim do grafico?",
+            "options": [
+                {
+                    "label": "com painel de diferenca",
+                    "value": "--diff"
+                },
+                {
+                    "label": "so as curvas",
+                    "value": ""
+                }
+            ],
+            "default": "--diff"
+        },
+        {
+            "id": "copiarFigura",
+            "type": "pickString",
+            "description": "Copiar a figura para figuras/ da semana atual do registro?",
+            "options": [
+                {
+                    "label": "sim, copiar para a semana",
+                    "value": "--registro"
+                },
+                {
+                    "label": "nao, deixar so em runs/",
+                    "value": ""
+                }
+            ],
+            "default": "--registro"
+        },
+        {
+            "id": "lambdaExciton",
+            "type": "promptString",
+            "description": "Exciton(s) a plotar: numero do LAMBDA, ou varios separados por espaco (ex.: 1 2 3)",
+            "default": "1"
+        },
+        {
+            "id": "janelaEnergia",
+            "type": "promptString",
+            "description": "Janela de energia do grafico, em eV (min max)",
+            "default": "-10 15"
+        },
+        {
+            "id": "escalaPesos",
+            "type": "promptString",
+            "description": "Tamanho dos circulos de peso (1 = padrao do tutorial; menor se estiverem grandes demais)",
+            "default": "0.5"
+        },
+        {
+            "id": "varredura",
+            "type": "promptString",
+            "description": "Varredura: prefixo das subpastas (ex.: nempty). Deixe '-' para ficha unica.",
+            "default": "-"
+        },
+        {
+            "id": "figura",
+            "type": "promptString",
+            "description": "Caminho da figura (relativo a raiz do projeto)",
+            "default": "runs/"
+        },
+        {
+            "id": "legenda",
+            "type": "promptString",
+            "description": "Legenda da figura",
+            "default": ""
+        },
+        {
+            "id": "raiosMT",
+            "type": "promptString",
+            "description": "Raios de muffin-tin, ESPECIE=VALOR separados por virgula (ex.: Cs=2.6,Sn=2.4,Br=2.2)",
+            "default": ""
+        },
+        {
+            "id": "incluiTutoriais",
+            "type": "pickString",
+            "description": "Incluir tambem as pastas de tutoriais/?",
+            "options": [
+                {
+                    "label": "so runs/",
+                    "value": ""
+                },
+                {
+                    "label": "runs/ e tutoriais/",
+                    "value": "--tutoriais"
+                }
+            ],
+            "default": ""
+        },
+        {
+            "id": "sistemaParametros",
+            "type": "promptString",
+            "description": "Sistema em registros/parametros-convergidos.conf (ex.: LiF, BN-cubico). '-' = panorama de todos.",
+            "default": "-"
+        },
+        {
+            "id": "numeroSemana",
+            "type": "promptString",
+            "description": "Numero da semana que fica registrada como procedencia (ex.: 03)",
+            "default": ""
+        },
+        {
+            "id": "quantosExcitons",
+            "type": "promptString",
+            "description": "Quantos excitons brilhantes listar",
+            "default": "5"
+        },
+        {
+            "id": "figuraOtica",
+            "type": "pickString",
+            "description": "Gerar a figura (Im eps + alpha)?",
+            "options": [
+                {
+                    "label": "sim, gerar a figura",
+                    "value": "--figura"
+                },
+                {
+                    "label": "nao, so os numeros",
+                    "value": ""
+                }
+            ],
+            "default": "--figura"
+        },
+        {
+            "id": "apagarMesmo",
+            "type": "pickString",
+            "description": "So mostrar, ou apagar de verdade?",
+            "options": [
+                {
+                    "label": "so mostrar o que seria apagado",
+                    "value": ""
+                },
+                {
+                    "label": "APAGAR",
+                    "value": "--apagar"
+                }
+            ],
+            "default": ""
+        },
+        {
+            "id": "faseMontar",
+            "type": "pickString",
+            "description": "Fase a montar",
+            "options": [
+                "pm3m",
+                "p4mbm",
+                "i4mcm",
+                "gamma",
+                "delta",
+                "r3c",
+                "r3m",
+                "--todas"
+            ],
+            "default": "pm3m"
+        },
+        {
+            "id": "materialMontar",
+            "type": "promptString",
+            "description": "Material",
+            "default": "CsSnBr3"
+        },
+        {
+            "id": "nivelMontar",
+            "type": "pickString",
+            "description": "Nivel de teoria",
+            "options": [
+                {
+                    "label": "PBE",
+                    "value": ""
+                },
+                {
+                    "label": "PBE-1/2  (correcao no Br)",
+                    "value": "--dfthalf Br"
+                },
+                {
+                    "label": "PBE+SOC",
+                    "value": "--soc"
+                },
+                {
+                    "label": "PBE-1/2+SOC",
+                    "value": "--dfthalf Br --soc"
+                }
+            ],
+            "default": ""
+        },
+        {
+            "id": "varrerMontar",
+            "type": "pickString",
+            "description": "Escrever tambem o convergencia.conf (varredura de r_cut)?",
+            "options": [
+                {
+                    "label": "nao",
+                    "value": ""
+                },
+                {
+                    "label": "sim, com varredura",
+                    "value": "--varrer"
+                }
+            ],
+            "default": ""
+        },
+        {
+            "id": "liseRanks",
+            "type": "promptString",
+            "description": "Ranks MPI ('auto' = pontos k do KPOINTS.OUT, ou o no inteiro se a pasta nao rodou)",
+            "default": "auto"
+        },
+        {
+            "id": "liseThreads",
+            "type": "pickString",
+            "description": "Threads OpenMP por rank ('auto' = floor(96 / ranks), usa o no inteiro)",
+            "options": [
+                "auto",
+                "1",
+                "2",
+                "3",
+                "4",
+                "6",
+                "8",
+                "12"
+            ],
+            "default": "auto"
+        },
+        {
+            "id": "liseTempo",
+            "type": "promptString",
+            "description": "Tempo maximo HH:MM:SS ('padrao' = LISE_TEMPO do lise.conf; particoes :test aceitam ate 01:00:00)",
+            "default": "padrao"
+        },
+        {
+            "id": "liseParticao",
+            "type": "pickString",
+            "description": "Particao",
+            "options": [
+                {
+                    "label": "padrao do lise.conf (cpu-clx)",
+                    "value": "padrao"
+                },
+                "cpu-clx",
+                "cpu-clx:test",
+                "cpu-clx:ssd",
+                "cpu-genoa"
+            ],
+            "default": "padrao"
+        },
+        {
+            "id": "liseState",
+            "type": "pickString",
+            "description": "Trazer o STATE.OUT? (binario, 77-94% do volume; so serve para continuar o calculo, e fica guardado no Lise)",
+            "options": [
+                {
+                    "label": "nao",
+                    "value": "--sem-state"
+                },
+                {
+                    "label": "sim",
+                    "value": "--com-state"
+                }
+            ],
+            "default": "--sem-state"
+        },
+        {
+            "id": "liseParalelo",
+            "type": "pickString",
+            "description": "Quantas pastas trazer ao mesmo tempo",
+            "options": [
+                "4",
+                "2",
+                "6",
+                "1"
+            ],
+            "default": "4"
+        },
+        {
+            "id": "liseConta",
+            "type": "pickString",
+            "description": "Conta a debitar",
+            "options": [
+                {
+                    "label": "projeto (<projeto>)",
+                    "value": "projeto"
+                },
+                {
+                    "label": "pessoal (<usuario>)",
+                    "value": "pessoal"
+                }
+            ],
+            "default": "projeto"
+        },
+        {
+            "id": "liseForcar",
+            "type": "pickString",
+            "description": "Se ja houver job.slurm na pasta",
+            "options": [
+                {
+                    "label": "nao sobrescrever",
+                    "value": ""
+                },
+                {
+                    "label": "sobrescrever",
+                    "value": "--forcar"
+                }
+            ],
+            "default": ""
+        }
+    ]
+}

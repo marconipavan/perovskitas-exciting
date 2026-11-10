@@ -1,0 +1,13 @@
+<input>
+    <structure speciespath="./">
+
+        <crystal scale="">
+            <basevect></basevect>
+        </crystal>
+
+        <species speciesfile="./">
+            <atom coord="" />
+        </species>
+
+    </structure>
+</input>

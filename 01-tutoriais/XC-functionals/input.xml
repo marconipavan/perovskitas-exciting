@@ -1,0 +1,24 @@
+<input>
+ 
+   <title>Silicon</title>
+ 
+   <structure speciespath="CAMINHO/DO/exciting/species">
+      <crystal scale="10.261">
+         <basevect> 0.0     0.5     0.5 </basevect>
+         <basevect> 0.5     0.0     0.5 </basevect>
+         <basevect> 0.5     0.5     0.0 </basevect>
+      </crystal>
+      <species speciesfile="Si.xml">
+         <atom coord="0.00 0.00 0.00" />
+         <atom coord="0.25 0.25 0.25" />
+      </species>
+   </structure>
+ 
+   <groundstate  
+      ngridk="8 8 8"
+      swidth="0.01"
+      rgkmax="8.0"
+      xctype="LDA_PW">
+   </groundstate>
+ 
+</input>

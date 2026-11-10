@@ -1,0 +1,48 @@
+<input>
+ 
+   <title>Spin-unpolarized Fe-bcc</title>
+ 
+   <structure speciespath="CAMINHO/DO/exciting/species">
+      <crystal scale="5.200">
+         <basevect> 0.5  0.5 -0.5</basevect>
+         <basevect> 0.5 -0.5  0.5</basevect>
+         <basevect>-0.5  0.5  0.5</basevect>
+      </crystal>
+      <species speciesfile="Fe.xml" rmt="2.0">
+         <atom coord="0.0 0.0 0.0"/>
+      </species>
+   </structure>
+ 
+   <groundstate 
+      do="fromscratch"
+      xctype="GGA_PBE_SOL"
+      rgkmax="8.0"    
+      ngridk="16 16 16"
+      stype="Gaussian"
+      swidth="0.01"
+      nempty="10">
+      <spin 
+         bfieldc="0.0 0.0 -4.0" 
+         reducebf="0.5" />
+   </groundstate>
+ 
+   <properties>
+      <dos
+         nsmdos="2"
+         nwdos="1000"
+         winddos="-0.3 0.3"/>
+      <bandstructure>
+         <plot1d>
+            <path steps="300">
+               <point coord="0.0    0.0    0.0 " label="Gamma"/>
+               <point coord="0.5   -0.5    0.5 " label="H"/>
+               <point coord="0.0    0.0    0.5 " label="N"/>
+               <point coord="0.0    0.0    0.0 " label="Gamma"/>
+               <point coord="0.25   0.25   0.25" label="P"/>
+               <point coord="0.5   -0.5    0.5 " label="H"/>
+            </path>
+         </plot1d>
+      </bandstructure>
+   </properties>
+ 
+</input>

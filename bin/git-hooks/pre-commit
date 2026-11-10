@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# Impede alterar ou apagar resultados ja promovidos em resultados/.
+set -euo pipefail
+raiz="$(git rev-parse --show-toplevel)"
+erro=0
+
+while IFS=$'\t' read -r st caminho; do
+    [[ -z "$st" ]] && continue
+    if [[ "$st" != "A" ]]; then
+        echo "pre-commit: resultados/ e imexivel - '$caminho' ($st) recusado." >&2
+        erro=1
+    fi
+done < <(git diff --cached --name-status --no-renames -- 'resultados/R*')
+
+while read -r caminho; do
+    [[ -z "$caminho" ]] && continue
+    pasta="$(cut -d/ -f1-2 <<< "$caminho")"
+    if git cat-file -e "HEAD:$pasta" 2>/dev/null; then
+        echo "pre-commit: '$pasta' ja esta versionado; nao se acrescenta arquivo a ele ('$caminho')." >&2
+        erro=1
+    fi
+done < <(git diff --cached --name-only --diff-filter=A -- 'resultados/R*')
+
+if [[ -d "$raiz/resultados" ]]; then
+    python3 "$raiz/bin/conferir-resultados.py" --quieto || erro=1
+fi
+
+if (( erro )); then
+    echo "pre-commit: corrija promovendo um resultado NOVO (bin/promover-resultado.py --substitui)." >&2
+    exit 1
+fi

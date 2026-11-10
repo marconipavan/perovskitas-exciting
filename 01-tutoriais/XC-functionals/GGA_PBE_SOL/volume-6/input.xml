@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<input>
+	<title>Silicon</title>
+	<structure speciespath="CAMINHO/DO/exciting/species">
+		<crystal scale="10.261010261">
+			<basevect>0.0 0.5 0.5</basevect>
+			<basevect>0.5 0.0 0.5</basevect>
+			<basevect>0.5 0.5 0.0</basevect>
+		</crystal>
+		<species speciesfile="Si.xml">
+			<atom coord="0.0 0.0 0.0"> </atom>
+			<atom coord="0.25 0.25 0.25"> </atom>
+		</species>
+	</structure>
+	<groundstate
+	   ngridk="8 8 8"
+	   swidth="0.01"
+	   rgkmax="8.0"
+	   xctype="GGA_PBE_SOL">
+	</groundstate>
+</input>
